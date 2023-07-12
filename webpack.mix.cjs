@@ -1,12 +1,9 @@
 const mix = require('laravel-mix');
 
-mix.js('resources/js/app.js', 'public/js').vue()
+mix.js('resources/js/app.js', 'public/js').vue();
+//.sass('resources/sass/app.scss', 'public/css')
+//.sourceMaps();
 
-mix.webpackConfig({
-    output: {
-        libraryTarget: 'umd',
-    }
-})
-resolve: {
-    extensions: ['.*', '.wasm', '.mjs', '.js', '.jsx', '.json', '.vue']
-}
+mix.options({
+    port: 8888
+});
