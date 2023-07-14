@@ -1,18 +1,20 @@
 <template>
     <div class="addItem">   
         <input type="text" v-model="item.name"/>
-        <font-awsome-icon
-            icon="plus-square"
-            @click="addItem()"
-            :class="[item.name ?'active' : 'inactive','plus']"
-        />
+        <font-awesome-icon
+        icon="plus-square"
+        @click="addItem()"
+        :class="[item.name ? 'active' : 'inactive', 'plus']"
+      />
     </div>
 
 </template>
 
 <script>
+import axios from 'axios'; 
 
 export default {
+ 
 data:function(){
     return {
         item:{
@@ -25,6 +27,19 @@ data:function(){
             if(this.item.name==''){
                 return;
             }
+            axios.post('api/item/store',{
+                item: this.item
+
+            })
+            .then(response => {
+                if(response.status == 201){
+                    this.item.name="";
+                    this.$emit('reloadlist');
+                }
+            })
+            .catch(error => {console.error(error);
+                
+            })
 
         }
     },
@@ -41,6 +56,9 @@ input{
     background: #f7f7f7;
     border: 0px;
     outline: none;
+    padding: 5px;
+    margin-right:10px ;
+    width:100%;
 }
 .plus{
     font-size: 20px;
@@ -49,6 +67,6 @@ input{
     color: forestgreen;
 }
 .inactive{
-    color:#999;
+    color:#999999;
 }
 </style>
